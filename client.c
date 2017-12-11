@@ -15,7 +15,7 @@
 /* Declaring errno */
 extern int errno;
 char received[50]="Empty";
-extern int BUFSIZE = 50;
+int BUFSIZE = 50;
 void sendMSG(char *msg);
 
 /* Function for error */
