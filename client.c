@@ -44,6 +44,7 @@ void main(int argc, char *argv[])
   while(lpchk==1){
     char msg[BUFSIZE];
     int loopchk=0;
+    strcpy(received,"Empty");
     printf("Enter the message to be sent: \n"); //User prompted for message
     scanf("%s",msg);
     if(strcmp(msg,"quit")==0){
