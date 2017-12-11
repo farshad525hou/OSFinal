@@ -28,18 +28,22 @@ void report_error(char *s)
 void main(int argc, char *argv[])
 {
  char msg[BUFSIZE];
+ int loopchk=1;
 printf("Enter the message to be sent: \n");
  scanf("%s",msg);
  pthread_t tid;
  pthread_attr_t attr;
  pthread_attr_init(&attr);
+ while(loopchk){
  pthread_create(&tid,&attr,sendMSG,msg);
  sleep(3);
  if(strcmp(received,"Empty")==0){
     printf("nothing received..cancelling");
      pthread_cancel(tid);
     
-    }
+    }else{
+        loopchk=0;
+ }
 }
 void sendMSG(char *msg){
 
