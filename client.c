@@ -60,6 +60,8 @@ void main(int argc, char *argv[])
       if(strcmp(received,"Empty")==0){
         printf("Server did not respond..trying again\n");
         pthread_cancel(tid);
+        if(loopchk==2)
+        printf("Server did not respond after three attempts \n");
         loopchk++;
       }else{
         loopchk=5;
