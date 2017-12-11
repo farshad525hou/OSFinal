@@ -33,8 +33,10 @@ void main(int argc, char *argv[])
  int loopchk=0;
 printf("Enter the message to be sent: \n");
  scanf("%s",msg);
- if(strcmp(msg,"quit")==0)
- lpchk=0;
+ if(strcmp(msg,"quit")==0){
+ lpchk= 0;
+exit(1);
+ }
  pthread_t tid;
  pthread_attr_t attr;
  pthread_attr_init(&attr);
