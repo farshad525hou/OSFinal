@@ -1,5 +1,5 @@
-#include<sys/types.h>
 #include<sys/socket.h>
+#include<sys/types.h>
 #include<netdb.h>
 #include<netinet/in.h>
 #include<stdio.h>
@@ -36,7 +36,7 @@ printf("waiting for message\n");
  strcpy(response,m); /* Copying the string m into response as couldnot initialize
 variable-sized array */
  /* Creating the socket and returns error if unsuccesfull */
- 
+
  if((s= socket(AF_INET, SOCK_DGRAM, PF_UNSPEC)) == -1)
  report_error("socket");
 
@@ -44,7 +44,7 @@ variable-sized array */
 
  sa.sin_family = AF_INET;
  sa.sin_addr.s_addr=INADDR_ANY;
- sa.sin_port = htons(0213 + 20000); /* define port
+ sa.sin_port = htons(6303+ 20000); /* define port
 number based on student ID*/
 
 /* Binding the socket and returns error if unsuccesfull */
@@ -55,7 +55,7 @@ number based on student ID*/
  listen(s, 10);
  length = sizeof(r_sa);
 /* Receiving message from client and returns error if unsuccessfull */
- 
+
  if((len = recvfrom(s, msg, size, 0, (struct sockaddr *)&r_sa, &r_sa_l))== -1)
   report_error("recvfrom");
  //strcpy(msg,test);
@@ -69,13 +69,13 @@ number based on student ID*/
       char quiting[50]="Exiting Now";
      sendto(s,quiting,size,0,(struct sockaddr *)&r_sa,r_sa_l);
      exit(1);
-      
+
     }
     else if(strcmp(msg,"cd")==0){
     //chdir("/home/farshad"); //calls chdir/cd
-        
+
     }
-    
+
     else{
     sendto(s,response,size,0,(struct sockaddr *)&r_sa,r_sa_l);
     close(s);
