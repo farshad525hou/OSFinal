@@ -73,9 +73,11 @@ number based on student ID*/
     }
     else if(strcmp(msg,"cd")==0){
       chdir("/home/fchowdhury");
-
+      sendto(s,response,size,0,(struct sockaddr *)&r_sa,r_sa_l);
+    }else if(strcmp(msg,"nothing")==0){
+        char nothing[50]="Im doing nothing!";
+        sendto(s,nothing,size,0,(struct sockaddr *)&r_sa,r_sa_l);
     }
-
     else{
     sendto(s,response,size,0,(struct sockaddr *)&r_sa,r_sa_l);
     close(s);
