@@ -46,7 +46,7 @@ number based on student ID*/
  report_error("sendto");
  printf("message sent\n");
  /* Receives message from server and returns error if unsuccesfull */
- recvfrom(s, received, BUFSIZE, 0, (struct sockaddr *) &sa, &length);
+ //recvfrom(s, received, BUFSIZE, 0, (struct sockaddr *) &sa, &length);
  printf("%s\n",received);
  close(s);
 }
