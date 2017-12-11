@@ -44,7 +44,7 @@ variable-sized array */
 
  sa.sin_family = AF_INET;
  sa.sin_addr.s_addr=INADDR_ANY;
- sa.sin_port = htons(6303+ 20000); /* define port
+ sa.sin_port = htons(0213+ 20000); /* define port
 number based on student ID*/
 
 /* Binding the socket and returns error if unsuccesfull */

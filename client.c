@@ -43,13 +43,13 @@ printf("Enter the message to be sent: \n");
     loopchk++;
     }else{
         loopchk=5;
-    }  
+    }
     }
 }
 void sendMSG(char *msg){
 
 int s,i;
- 
+
  struct sockaddr_in sa= {0};
  int length = sizeof(sa);
 struct hostent *hp;
@@ -73,5 +73,5 @@ number based on student ID*/
  recvfrom(s, received, BUFSIZE, 0, (struct sockaddr *) &sa, &length);
  printf("%s\n",received);
  close(s);
-    
+
 }
