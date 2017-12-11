@@ -85,7 +85,6 @@ void sendMSG(char *msg){
   /* Creating the socket and returns error if unsuccessfull */
   if((s=socket(AF_INET, SOCK_DGRAM, PF_UNSPEC))== -1)
   report_error("socket");
-  printf("Socket= %d\n",s);
   /* Sending the message to server and returns error if unsuccesfull */
   if(sendto(s, msg, BUFSIZE, 0, (struct sockaddr *) &sa, length)== -1)
   report_error("sendto");
