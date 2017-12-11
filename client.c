@@ -38,7 +38,7 @@ printf("Enter the message to be sent: \n");
  pthread_create(&tid,&attr,sendMSG,msg);
  sleep(3);
  if(strcmp(received,"Empty")==0){
-    printf("nothing received..trying again");
+    printf("Server did not respond..trying again\n");
      pthread_cancel(tid);
     loopchk++;
     }else{
@@ -68,7 +68,7 @@ number based on student ID*/
  /* Sending the message to server and returns error if unsuccesfull */
  if(sendto(s, msg, BUFSIZE, 0, (struct sockaddr *) &sa, length)== -1)
  report_error("sendto");
- printf("message sent\n");
+ printf("message sent!\n");
  /* Receives message from server and returns error if unsuccesfull */
  recvfrom(s, received, BUFSIZE, 0, (struct sockaddr *) &sa, &length);
  printf("%s\n",received);
