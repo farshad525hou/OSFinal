@@ -1,3 +1,17 @@
+/*
+Operating Systems and Kernel Design
+Assignment 4
+Client and Server Communication
+Farshad Chowdhury
+December 11, 2017
+Client.c
+This program sends a message to a server and times out if the server
+does not respond in time.
+
+*/
+
+
+
 #include<sys/types.h>
 #include<sys/socket.h>
 #include<netdb.h>
@@ -24,61 +38,60 @@ void report_error(char *s)
  printf("sender: error in %s, errno = %d\n",s,errno);
  exit(1);
 }
-/* Giving 'size' of message dynamically as argument */
 void main(int argc, char *argv[])
 {
   int lpchk=1;
   while(lpchk==1){
- char msg[BUFSIZE];
- int loopchk=0;
-printf("Enter the message to be sent: \n");
- scanf("%s",msg);
- if(strcmp(msg,"quit")==0){
- lpchk= 0;
-exit(1);
- }
- pthread_t tid;
- pthread_attr_t attr;
- pthread_attr_init(&attr);
- while(loopchk<3){
- pthread_create(&tid,&attr,sendMSG,msg);
- sleep(3);
- if(strcmp(received,"Empty")==0){
-    printf("Server did not respond..trying again\n");
-     pthread_cancel(tid);
-    loopchk++;
-    }else{
-        loopchk=5;
+    char msg[BUFSIZE];
+    int loopchk=0;
+    printf("Enter the message to be sent: \n"); //User prompted for message
+    scanf("%s",msg);
+    if(strcmp(msg,"quit")==0){
+      lpchk= 0;
+      exit(1);
     }
+    pthread_t tid;
+    pthread_attr_t attr;
+    pthread_attr_init(&attr);
+    while(loopchk<3){ //loop used to retry message sending
+      pthread_create(&tid,&attr,sendMSG,msg); // thread created to send message
+      sleep(3);// main thread sleeps for three seconds before checking array
+      if(strcmp(received,"Empty")==0){
+        printf("Server did not respond..trying again\n");
+        pthread_cancel(tid);
+        loopchk++;
+      }else{
+        loopchk=5;
+      }
     }
   }
 }
 void sendMSG(char *msg){
 
-int s,i;
+  int s,i;
 
- struct sockaddr_in sa= {0};
- int length = sizeof(sa);
-struct hostent *hp;
+  struct sockaddr_in sa= {0};
+  int length = sizeof(sa);
+  struct hostent *hp;
 
- /* FILL SOCKET ADDRESS*/
- if((hp = gethostbyname(RECEIVER_HOST))==NULL)
-report_error("gethostbyname");
- bcopy((char*)hp->h_addr, (char *)&sa.sin_addr, hp->h_length);
- sa.sin_family = hp->h_addrtype;
- sa.sin_port = htons(0213 + 20000); /* define port
-number based on student ID*/
- /* Creating the socket and returns error if unsuccessfull */
- if((s=socket(AF_INET, SOCK_DGRAM, PF_UNSPEC))== -1)
- report_error("socket");
- printf("Socket= %d\n",s);
- /* Sending the message to server and returns error if unsuccesfull */
- if(sendto(s, msg, BUFSIZE, 0, (struct sockaddr *) &sa, length)== -1)
- report_error("sendto");
- printf("message sent!\n");
- /* Receives message from server and returns error if unsuccesfull */
- recvfrom(s, received, BUFSIZE, 0, (struct sockaddr *) &sa, &length);
- printf("%s\n",received);
- close(s);
+  /* FILL SOCKET ADDRESS*/
+  if((hp = gethostbyname(RECEIVER_HOST))==NULL)
+  report_error("gethostbyname");
+  bcopy((char*)hp->h_addr, (char *)&sa.sin_addr, hp->h_length);
+  sa.sin_family = hp->h_addrtype;
+  sa.sin_port = htons(0213 + 20000); /* define port
+  number based on student ID*/
+  /* Creating the socket and returns error if unsuccessfull */
+  if((s=socket(AF_INET, SOCK_DGRAM, PF_UNSPEC))== -1)
+  report_error("socket");
+  printf("Socket= %d\n",s);
+  /* Sending the message to server and returns error if unsuccesfull */
+  if(sendto(s, msg, BUFSIZE, 0, (struct sockaddr *) &sa, length)== -1)
+  report_error("sendto");
+  printf("message sent!\n");
+  /* Receives message from server and returns error if unsuccesfull */
+  recvfrom(s, received, BUFSIZE, 0, (struct sockaddr *) &sa, &length);
+  printf("%s\n",received);
+  close(s);
 
 }
