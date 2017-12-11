@@ -43,7 +43,8 @@ printf("Enter the message to be sent: \n");
     
     }else{
         loopchk=0;
- }
+    }  
+    }
 }
 void sendMSG(char *msg){
 
