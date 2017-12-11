@@ -72,7 +72,7 @@ number based on student ID*/
       
     }
     else if(strcmp(msg,"cd")==0){
-    
+    //chdir("/home/farshad"); //calls chdir/cd
         
     }
     
