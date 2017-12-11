@@ -14,7 +14,7 @@
 #define RECEIVER_HOST "anaconda3.uml.edu" /* Server machine */
 /* Declaring errno */
 extern int errno;
-char received[50];
+char received[50]="Empty";
 extern int BUFSIZE = 50;
 void sendMSG(char *msg);
 
@@ -35,9 +35,8 @@ printf("Enter the message to be sent: \n");
  pthread_attr_init(&attr);
  pthread_create(&tid,&attr,sendMSG,msg);
  sleep(3);
- if(received==NULL){
+ if(strcmp(received,"Empty")==0){
     pthread_cancel(tid);
-    pthread_create(&tid,&attr,sendMSG,msg);
     }
 }
 void sendMSG(char *msg){
