@@ -36,7 +36,9 @@ printf("Enter the message to be sent: \n");
  pthread_create(&tid,&attr,sendMSG,msg);
  sleep(3);
  if(strcmp(received,"Empty")==0){
-    pthread_cancel(tid);
+    printf("nothing received..cancelling");
+     pthread_cancel(tid);
+    
     }
 }
 void sendMSG(char *msg){
