@@ -9,9 +9,15 @@
 #include<errno.h>
 #include<arpa/inet.h>
 #include<string.h>
+#include <pthread.h>
+#include <semaphore.h>
 #define RECEIVER_HOST "anaconda3.uml.edu" /* Server machine */
 /* Declaring errno */
 extern int errno;
+char received[50];
+extern int BUFSIZE = 50;
+void sendMSG(char *msg);
+
 /* Function for error */
 void report_error(char *s)
 {
@@ -21,15 +27,27 @@ void report_error(char *s)
 /* Giving 'size' of message dynamically as argument */
 void main(int argc, char *argv[])
 {
- int s,i;
- int BUFSIZE = atoi(argv[1]);
  char msg[BUFSIZE];
- char received[BUFSIZE];
+printf("Enter the message to be sent: \n");
+ scanf("%s",msg);
+ pthread_t tid;
+ pthread_attr_t attr;
+ pthread_attr_init(&attr);
+ pthread_create(&tid,&attr,sendMSG,msg);
+ sleep(3);
+ if(received==NULL){
+    pthread_cancel(tid);
+    pthread_create(&tid,&attr,sendMSG,msg);
+    }
+}
+void sendMSG(char *msg){
+
+int s,i;
+ 
  struct sockaddr_in sa= {0};
  int length = sizeof(sa);
 struct hostent *hp;
- printf("Enter the message to be sent: \n");
- scanf("%s",msg);
+
  /* FILL SOCKET ADDRESS*/
  if((hp = gethostbyname(RECEIVER_HOST))==NULL)
 report_error("gethostbyname");
@@ -46,7 +64,8 @@ number based on student ID*/
  report_error("sendto");
  printf("message sent\n");
  /* Receives message from server and returns error if unsuccesfull */
- //recvfrom(s, received, BUFSIZE, 0, (struct sockaddr *) &sa, &length);
+ recvfrom(s, received, BUFSIZE, 0, (struct sockaddr *) &sa, &length);
  printf("%s\n",received);
  close(s);
+    
 }
