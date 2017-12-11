@@ -27,10 +27,14 @@ void report_error(char *s)
 /* Giving 'size' of message dynamically as argument */
 void main(int argc, char *argv[])
 {
+  int lpchk=1;
+  while(lpchk==1){
  char msg[BUFSIZE];
  int loopchk=0;
 printf("Enter the message to be sent: \n");
  scanf("%s",msg);
+ if(strcmp(msg,"quit")==0)
+ lpchk=0;
  pthread_t tid;
  pthread_attr_t attr;
  pthread_attr_init(&attr);
@@ -45,6 +49,7 @@ printf("Enter the message to be sent: \n");
         loopchk=5;
     }
     }
+  }
 }
 void sendMSG(char *msg){
 
